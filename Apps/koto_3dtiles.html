@@ -29,9 +29,9 @@
     <div id="cesiumContainer"></div>
     <script>
       var viewer = new Cesium.Viewer("cesiumContainer");
-      try {
-        const tileset = await Cesium.Cesium3DTileset.fromUrl(url :'./sample/koto/tileset.json');
-        viewer.scene.primitives.add(tileset);
+      var tileset1 = new Cesium.Cesium3DTileset({ url: './sample/koto/tileset.json'});
+      tileset1.readyPromise.then(function(tileset1) {
+        viewer.scene.primitives.add(tileset1);
         tileset1.style = new Cesium.Cesium3DTileStyle({
           markerSymbol: '?'
         });
@@ -43,9 +43,9 @@
             roll : 0.0
           }
         });
-      } catch (error) {
-        console.log(`Failed to load tileset: ${error}`);
-      }
+      }).otherwise(function(error) {
+        console.log(error);
+      });
     </script>
   </body>
 </html>
